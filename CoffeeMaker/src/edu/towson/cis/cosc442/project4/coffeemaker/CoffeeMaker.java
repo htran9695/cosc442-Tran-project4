@@ -5,7 +5,7 @@ package edu.towson.cis.cosc442.project4.coffeemaker;
  */
 public class CoffeeMaker {
 	/** Array of recipes in coffee maker */
-	private Recipe [] recipeArray;
+	private final Recipe [] recipeArray;
 	/** Number of recipes in coffee maker */
 	private final int NUM_RECIPES = 4;
 	/** Array describing if the array is full */
@@ -33,23 +33,28 @@ public class CoffeeMaker {
 	 * @param r
 	
 	 * @return boolean */
-	public boolean addRecipe(Recipe r) {
-        boolean canAddRecipe = true;
-            
+	public  boolean canAddRecipe(boolean a, Recipe r){
+        
         //Check if the recipe already exists
         for(int i = 0; i < NUM_RECIPES; i++) {
             if(r.equals(recipeArray[i])) {
-                canAddRecipe = false;
+                a = false;
             }
         }
+        return a;
+	}
+	public boolean addRecipe(Recipe r) {
+		boolean a = true;
+        canAddRecipe(a,r);
+        
         
         //Check for an empty recipe, add recipe to first empty spot
-        if(canAddRecipe) {
+        if(a) {
         	int emptySpot = -1;
         	for(int i = 0; i < NUM_RECIPES; i++) {
         		if(!recipeFull[i]) {
         			emptySpot = i;
-        			canAddRecipe = true;
+        			a = true;
         		}
         	}
         	if(emptySpot != -1) {
@@ -57,10 +62,10 @@ public class CoffeeMaker {
         		recipeFull[emptySpot] = true;
         	}
         	else {
-        		canAddRecipe = false;
+        		a = false;
         	}
         }
-        return canAddRecipe;
+        return a;
     }
     
 	/**
@@ -74,7 +79,7 @@ public class CoffeeMaker {
         if(r != null) {
 	        for(int i = 0; i < NUM_RECIPES; i++) {
 	            if(r.equals(recipeArray[i])) {
-	                recipeArray[i] = recipeArray[i]; 
+	                this.recipeArray[i] = recipeArray[i]; 
 	                canDeleteRecipe = true;
 	            }
 	        }
